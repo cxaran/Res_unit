@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Resolución unitaria</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="/eel.js"></script>
+    </head>
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="index.html">Resolución unitaria</a>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <div class="sb-sidenav-menu-heading">Methods</div>
+                            <a class="nav-link" href="index.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-file-csv"></i></div>
+                                From file
+                            </a>
+                            <a class="nav-link" href="index.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-random"></i></div>
+                                Random selection
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                      
+                        <div class="row mx-4 my-4">
+                            <div class="col-xl-3 col-md-6" id="run_button">
+                                <p>
+                                    <a href="#" class="btn btn-info btn-lg" onclick="run()" > 
+                                    <span class="fas fa-play"></span> Run
+                                    </a>
+                                </p> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <ol class="breadcrumb mb-4 mx-4">
+                                <li class="breadcrumb-item active" id="result"></li>
+                            </ol>
+                        </div>
+                        <div class="row">
+                            <ol class="breadcrumb mb-4 mx-4">
+                                <li class="breadcrumb-item active" id="furm"></li>
+                            </ol>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Matriz
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-bordered" id="datatablesSimple0">
+                                    
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Unitarias
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-bordered" id="datatablesSimple">
+                                    
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                No Unitarias
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-bordered" id="datatablesSimple2">
+                                    
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Historial
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-bordered" id="datatablesSimple3">
+                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">cxaran 2021</div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="assets/demo/chart-area-demo.js"></script>
+        <script src="assets/demo/chart-bar-demo.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script src="js/datatables-simple-demo.js"></script>
+        <script type="text/javascript">
+            function run(){
+                c_all();
+                eel.run_res_unit_rand();
+            }
+
+            function c_all(){
+                document.getElementById("result").innerHTML = ""
+                document.getElementById("furm").innerHTML = ""
+                document.getElementById("datatablesSimple2").innerHTML = ''
+                document.getElementById("datatablesSimple").innerHTML = ''
+                document.getElementById("datatablesSimple0").innerHTML = ''
+                document.getElementById("datatablesSimple3").innerHTML = ''
+            }
+
+            eel.expose(show_run);
+            function show_run(flag) {
+
+            }
+
+            eel.expose(show_res);
+            function show_res(res) {
+                console.log(res)
+                nunit = "<thead><tr><th>#</th>"
+                f = ''
+                for( i = 0; i < res[5][0].length; i++ ){ 
+                    nunit += "<th>X"+(i+1)+"</th>"
+                }
+                nunit += "</tr> </thead> <tbody>"
+                for( i = 0; i < res[5].length; i++ ){ 
+                    nunit += "<tr> <td>"+(i+1)+"</td>"
+                    fa='{'
+                    for( j = 0; j < res[5][i].length; j++ ){ 
+                        nunit += "<td>"+(res[5][i][j])+"</td>"
+                        if(res[5][i][j]!=0){ 
+                            if( fa != '{') fa += ', '
+                            fa += (res[5][i][j]<0?'¬':'')+('X'+(j+1))
+                        }
+                    }
+                    nunit += "</tr>"
+                    if(fa !='{'){
+                        fa += '}'
+                        f += fa
+                    }
+                    if( i < res[5].length-1 && f != '') f += ', '
+                }
+                nunit += "</tbody>"
+                document.getElementById("datatablesSimple0").innerHTML = nunit
+                document.getElementById("furm").innerHTML = f
+
+                if(res[0].length>0){
+                    nunit = "<thead><tr><th>#</th>"
+                    for( i = 0; i < res[0][0].length; i++ ){ 
+                        nunit += "<th>X"+(i+1)+"</th>"
+                    }
+                    nunit += "</tr> </thead> <tbody>"
+                    for( i = 0; i < res[0].length; i++ ){ 
+                        nunit += "<tr> <td>"+(i+1)+"</td>"
+                        for( j = 0; j < res[0][i].length; j++ ){ 
+                            nunit += "<td>"+(res[0][i][j])+"</td>"
+                            
+                        }
+                        nunit += "</tr>"
+                    }
+                    nunit += "</tbody>"
+                    document.getElementById("datatablesSimple").innerHTML = nunit
+                }
+
+                if(res[1].length>0){
+                    nunit = "<thead><tr><th>#</th>"
+                    for( i = 0; i < res[1][0].length; i++ ){ 
+                        nunit += "<th>X"+(i+1)+"</th>"
+                    }
+                    nunit += "</tr> </thead> <tbody>"
+                    for( i = 0; i < res[1].length; i++ ){ 
+                        nunit += "<tr> <td>"+(i+1)+"</td>"
+                        for( j = 0; j < res[1][i].length; j++ ){ 
+                            nunit += "<td>"+(res[1][i][j])+"</td>"
+                            
+                        }
+                        nunit += "</tr>"
+                    }
+                    nunit += "</tbody>"
+                    document.getElementById("datatablesSimple2").innerHTML = nunit
+                }
+
+                if(res[6].length>0){
+                    nunit = "<thead><tr><th>#</th>"
+                    nunit += "<th>tipo</th>"
+                    nunit += "<th>a</th>"
+                    nunit += "<th>b</th>"
+                    nunit += "<th>elemnt</th>"
+                    nunit += "</tr> </thead> <tbody>"
+                    for( i = 0; i < res[6].length; i++ ){ 
+                        nunit += "<tr> <td>"+(i+1)+"</td>"
+                        for( j = 0; j < res[6][i].length; j++ ){ 
+                            nunit += "<td>"+(res[6][i][j])+"</td>"
+                        }
+                        nunit += "</tr>"
+                    }
+                    nunit += "</tbody>"
+                    document.getElementById("datatablesSimple3").innerHTML = nunit
+                }
+
+                if(res[2]){
+                    document.getElementById("result").innerHTML = "Unitaria "+res[3]+" Unitaria "+res[4]+" Son contradicciones por lo tanto NILL"
+                }
+                else
+                    document.getElementById("result").innerHTML = "Es consistente"
+            }
+        </script>
+    </body>
+</html>
